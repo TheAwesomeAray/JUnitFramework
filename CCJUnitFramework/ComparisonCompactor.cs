@@ -37,7 +37,7 @@ namespace CCJUnitFramework
 
         private string CompactString(string source)
         {
-            string result = DELTA_START + source.Substring(fPrefix, source.Length - fSuffix + 1) + DELTA_END;
+            string result = DELTA_START + source.Substring(fPrefix, source.Length - fSuffix + 1 - fPrefix) + DELTA_END;
 
             if (fPrefix > 0)
                 result = ComputeCommonPrefix() + result;
@@ -49,14 +49,16 @@ namespace CCJUnitFramework
 
         private string ComputeCommonPrefix()
         {
-            return (fPrefix > fContextLength ? ELLIPSIS : "") + fExpected.Substring(Math.Max(0, fPrefix - fContextLength), fPrefix);
+            return (fPrefix > fContextLength ? ELLIPSIS : "") + fExpected.Substring(Math.Max(0, fPrefix - fContextLength), fPrefix - Math.Max(0, fPrefix - fContextLength));
         }
 
         private string ComputeCommonSuffix()
         {
-            int end = Math.Min(fExpected.Length - fSuffix + fContextLength, fExpected.Length);
+            int start = fExpected.Length - fSuffix + 1;
+            int length = Math.Min(fExpected.Length - fSuffix + 1 + fContextLength, fExpected.Length) - start;
+            
 
-            return fExpected.Substring(fExpected.Length - fSuffix + 1, end) + (fExpected.Length - fSuffix + 1 < fExpected.Length - fContextLength ? ELLIPSIS : "");
+            return fExpected.Substring(fExpected.Length - fSuffix + 1, length) + (fExpected.Length - fSuffix + 1 < fExpected.Length - fContextLength ? ELLIPSIS : "");
         }
 
         private void FindCommonPrefix()
