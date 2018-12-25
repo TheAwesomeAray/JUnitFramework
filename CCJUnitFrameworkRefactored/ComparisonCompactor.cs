@@ -1,5 +1,6 @@
 ﻿using CCJUnitFramework;
 using System;
+using System.Text;
 
 namespace CCJUnitFrameworkRefactored
 {
@@ -28,7 +29,7 @@ namespace CCJUnitFrameworkRefactored
 
         public string FormatCompactedComparison(string message)
         {
-            if (CanBeCompacted())
+            if (ShouldBeCompacted())
             {
                 CompactExpectedAndActual();
                 return JUnitAssert.Format(message, compactExpected, compactActual);
@@ -65,36 +66,54 @@ namespace CCJUnitFrameworkRefactored
             return actual.Length - suffixLength <= prefixLength || expected.Length - suffixLength <= prefixLength;
         }
 
-        private bool CanBeCompacted()
+        private bool ShouldBeCompacted()
         {
             return expected != null && actual != null && !AreStringsEqual();
         }
 
         private string Compact(string s)
         {
-            string result = DELTA_START + s.Substring(prefixLength, s.Length - suffixLength - prefixLength) + DELTA_END;
-
-            if (prefixLength > 0)
-                result = ComputeCommonPrefix() + result;
-            if (suffixLength > 0)
-                result = result + ComputeCommonSuffix();
-
-            return result;
+            return new StringBuilder().Append(StartingEllipses())
+                                      .Append(StartingContext())
+                                      .Append(DELTA_START)
+                                      .Append(Delta(s))
+                                      .Append(DELTA_END)
+                                      .Append(EndingContext())
+                                      .Append(EndingEllipses())
+                                      .ToString();
         }
 
-        private string ComputeCommonPrefix()
+        private string StartingEllipses()
         {
-            return (prefixLength > contextLength ? ELLIPSIS : "") + expected.Substring(Math.Max(0, prefixLength - contextLength), prefixLength - Math.Max(0, prefixLength - contextLength));
+            return prefixLength > contextLength ? ELLIPSIS : "";
         }
 
-        private string ComputeCommonSuffix()
+        private string StartingContext()
         {
-            int start = expected.Length - suffixLength;
-            int length = Math.Min(expected.Length - suffixLength + contextLength, expected.Length) - start;
-            
-            return expected.Substring(expected.Length - suffixLength, length) + (expected.Length - suffixLength < expected.Length - contextLength ? ELLIPSIS : "");
+            int contextStart = Math.Max(0, prefixLength - contextLength);
+            int length = prefixLength - contextStart;
+            return expected.Substring(contextStart, length);
         }
 
+        private string Delta(string s)
+        {
+            int deltaStart = prefixLength;
+            int deltaLength = s.Length - suffixLength - prefixLength;
+            return s.Substring(deltaStart, deltaLength);
+        }
+
+        private string EndingContext()
+        {
+            int contextStart = expected.Length - suffixLength;
+            int length = suffixLength > contextLength ? contextLength : suffixLength;
+            return expected.Substring(contextStart, length);
+        }
+
+        private string EndingEllipses()
+        {
+            return suffixLength > contextLength ? ELLIPSIS : "";
+        }
+        
         private void FindCommonPrefix()
         {
             prefixLength = 0;
