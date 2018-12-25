@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CCJUnitFramework
 {
@@ -26,13 +24,13 @@ namespace CCJUnitFramework
         public string Compact(string message)
         {
             if (fExpected == null || fActual == null || AreStringsEqual())
-                return Assert.Format(message, fExpected, fActual);
+                return JUnitAssert.Format(message, fExpected, fActual);
 
             FindCommonPrefix();
             FindCommonSuffix();
             string expected = CompactString(fExpected);
             string actual = CompactString(fActual);
-            return Assert.Format(message, expected, actual);
+            return JUnitAssert.Format(message, expected, actual);
         }
 
         private string CompactString(string source)
@@ -57,7 +55,6 @@ namespace CCJUnitFramework
             int start = fExpected.Length - fSuffix + 1;
             int length = Math.Min(fExpected.Length - fSuffix + 1 + fContextLength, fExpected.Length) - start;
             
-
             return fExpected.Substring(fExpected.Length - fSuffix + 1, length) + (fExpected.Length - fSuffix + 1 < fExpected.Length - fContextLength ? ELLIPSIS : "");
         }
 
@@ -85,9 +82,7 @@ namespace CCJUnitFramework
 
             fSuffix = fExpected.Length - expectedSuffix;
         }
-
-
-
+        
         private bool AreStringsEqual()
         {
             return fExpected.Equals(fActual);

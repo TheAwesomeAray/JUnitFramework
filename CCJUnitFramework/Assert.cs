@@ -1,6 +1,6 @@
 ﻿namespace CCJUnitFramework
 {
-    class Assert
+    public class JUnitAssert
     {
         public static string Format (string message, string expected, string actual)
         {

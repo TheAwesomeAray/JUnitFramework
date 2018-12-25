@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CCJUnitFramework", "CCJUnit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCJUnitFramework.Tests", "CCJUnitFramework.Tests\CCJUnitFramework.Tests.csproj", "{16C8C2FC-EF9F-4248-B00F-3E92B600DAF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCJUnitFrameworkRefactored", "CCJUnitFrameworkRefactored\CCJUnitFrameworkRefactored.csproj", "{45E670CB-E5C0-4BFA-BAF2-5EF53B7A6C3C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{16C8C2FC-EF9F-4248-B00F-3E92B600DAF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16C8C2FC-EF9F-4248-B00F-3E92B600DAF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16C8C2FC-EF9F-4248-B00F-3E92B600DAF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45E670CB-E5C0-4BFA-BAF2-5EF53B7A6C3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45E670CB-E5C0-4BFA-BAF2-5EF53B7A6C3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45E670CB-E5C0-4BFA-BAF2-5EF53B7A6C3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45E670CB-E5C0-4BFA-BAF2-5EF53B7A6C3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
