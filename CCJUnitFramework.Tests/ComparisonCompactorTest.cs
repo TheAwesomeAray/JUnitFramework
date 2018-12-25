@@ -98,8 +98,36 @@ namespace CCJUnitFramework.Tests
         [Fact]
         public void TestComparisonErrorWithActualNull()
         {
+            string failure = new ComparisonCompactor(0, "a", null).Compact(null);
+            Assert.Equal("expected <a> but was <null>", failure);
+        }
+
+        [Fact]
+        public void TestComparisonErrorWithActualNullContext()
+        {
             string failure = new ComparisonCompactor(2, "a", null).Compact(null);
             Assert.Equal("expected <a> but was <null>", failure);
+        }
+
+        [Fact]
+        public void TestComparisonErrorWithExpectedNull()
+        {
+            string failure = new ComparisonCompactor(0, null, "a").Compact(null);
+            Assert.Equal("expected <null> but was <a>", failure);
+        }
+
+        [Fact]
+        public void TestComparisonErrorWithExpectedNullContext()
+        {
+            string failure = new ComparisonCompactor(2, "a", null).Compact(null);
+            Assert.Equal("expected <a> but was <null>", failure);
+        }
+
+        [Fact]
+        public void TestBug609972()
+        {
+            string failure = new ComparisonCompactor(10, "S&P500", "0").Compact(null);
+            Assert.Equal("expected <[S&P50]0> but was <[]0>", failure);
         }
     }
 }
