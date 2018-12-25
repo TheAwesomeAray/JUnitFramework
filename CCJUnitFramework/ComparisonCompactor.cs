@@ -79,7 +79,7 @@ namespace CCJUnitFramework
 
             for (; actualSuffix >= fPrefix && expectedSuffix >= fPrefix; actualSuffix--, expectedSuffix--)
             {
-                if (fExpected[expectedSuffix] != fActual[expectedSuffix])
+                if (fExpected[expectedSuffix] != fActual[actualSuffix])
                     break;
             }
 
