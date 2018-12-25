@@ -59,5 +59,47 @@ namespace CCJUnitFramework.Tests
             string failure = new ComparisonCompactor(0, "bc", "abc").Compact(null);
             Assert.Equal("expected <[]...> but was <[a]...>", failure);
         }
+
+        [Fact]
+        public void TestComparisonErrorEndSameCompleteContext()
+        {
+            string failure = new ComparisonCompactor(2, "bc", "abc").Compact(null);
+            Assert.Equal("expected <[]bc> but was <[a]bc>", failure);
+        }
+
+        [Fact]
+        public void TestComparisonErrorOverlappingMatches()
+        {
+            string failure = new ComparisonCompactor(0, "abc", "abbc").Compact(null);
+            Assert.Equal("expected <...[]...> but was <...[b]...>", failure);
+        }
+
+        [Fact]
+        public void TestComparisonErrorOverlappingMatchesContext()
+        {
+            string failure = new ComparisonCompactor(2, "abc", "abbc").Compact(null);
+            Assert.Equal("expected <ab[]c> but was <ab[b]c>", failure);
+        }
+
+        [Fact]
+        public void TestComparisonErrorOverlappingMatches2()
+        {
+            string failure = new ComparisonCompactor(0, "abcdde", "abcde").Compact(null);
+            Assert.Equal("expected <...[d]...> but was <...[]...>", failure);
+        }
+
+        [Fact]
+        public void TestComparisonErrorOverlappingMatches2Context()
+        {
+            string failure = new ComparisonCompactor(2, "abcdde", "abcde").Compact(null);
+            Assert.Equal("expected <...cd[d]e> but was <...cd[]e>", failure);
+        }
+
+        [Fact]
+        public void TestComparisonErrorWithActualNull()
+        {
+            string failure = new ComparisonCompactor(2, "a", null).Compact(null);
+            Assert.Equal("expected <a> but was <null>", failure);
+        }
     }
 }
